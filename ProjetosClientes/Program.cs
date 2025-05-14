@@ -22,6 +22,21 @@ class Program
                 using (SqlCommand comando = new SqlCommand(sql, conexao))
                 {
                     conexao.Open();
+                    using (SqlDataReader leitor = comando.ExecuteReader())
+                    {
+
+                        while (leitor.Read())
+                        {
+                            //Console.WriteLine("id: {0} ", leitor["id"]);
+                            //Console.WriteLine("nome: {0} ", leitor["nome"]);
+                            //Console.WriteLine("email: {0} ", leitor["email"]);
+
+                            Console.WriteLine("id: {0} ", leitor.GetSqlInt32(0));
+                            Console.WriteLine("nome: {0} ", leitor.GetSqlString(1));
+                            Console.WriteLine("email: {0} ", leitor.GetSqlString(2));
+                        }
+
+                    }
                 }
             }
         }
