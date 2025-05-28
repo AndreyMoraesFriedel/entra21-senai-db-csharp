@@ -1,5 +1,3 @@
-using System.Runtime.Serialization;
-
 namespace ProjetoWeb;
 
 public class Program
@@ -51,6 +49,19 @@ public class Program
                 nome = p1.nome
             };
         }));
+
+        Banco dba = new Banco();
+        dba.carregarBanco();
+        app.MapGet("/banco", (HttpContext contexto) =>
+        {
+            var valoresdalista = "";
+            foreach (Pessoa p in dba.GetLista())
+            {
+                valoresdalista += $"<b>ID:</b>{p.id} - <b>Nome:</b>{p.nome}<br>";
+            }
+            //return valoresdalista;
+            contexto.Response.WriteAsync(valoresdalista);
+        });
 
         app.Run();
     }
